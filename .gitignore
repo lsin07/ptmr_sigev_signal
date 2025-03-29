@@ -1,0 +1,8 @@
+# objects
+*.o
+
+# executable
+ptmr_sigev_signal
+
+# vscode configs
+.vscode/
