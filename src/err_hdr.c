@@ -8,7 +8,11 @@ void errExit(const char *msg) {
 }
 
 void usageErr(const char *msg, const char* cmd) {
-    printf("Usage: ");
-    printf(msg, cmd);
+    char usage[] = "Usage: ";
+    char *buf = malloc(strlen(msg) + strlen(usage) + 1);
+    strcpy(buf, usage);
+    strcat(buf, msg);
+    fprintf(stderr, buf, cmd);
+    free(buf);
     exit(EXIT_FAILURE);
 }
