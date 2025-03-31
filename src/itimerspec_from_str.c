@@ -1,16 +1,15 @@
 #define _POSIX_C_SOURCE 199309
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "itimerspec_from_str.h"    /* Declares function defined here */
+#include "err_hdr.h"
 
 void itimerspecFromStr(char *str, struct itimerspec *tsp)
 {
     char *cptr, *sptr;
     char *strbuf = malloc(strlen(str) + 1);
     if (strbuf == NULL) {
-        perror("malloc: ");
-        exit(EXIT_FAILURE);
+        errExit("malloc");
     }
     strcpy(strbuf, str);
 
