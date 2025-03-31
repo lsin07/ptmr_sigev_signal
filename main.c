@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 #include <signal.h>
 #include "curr_time.h"             /* Declares currTime() */
 #include "itimerspec_from_str.h"   /* Declares itimerspecFromStr() */

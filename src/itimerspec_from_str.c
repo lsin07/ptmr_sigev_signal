@@ -1,4 +1,5 @@
 #define _POSIX_C_SOURCE 199309
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "itimerspec_from_str.h"    /* Declares function defined here */
@@ -6,16 +7,22 @@
 void itimerspecFromStr(char *str, struct itimerspec *tsp)
 {
     char *cptr, *sptr;
+    char *strbuf = malloc(strlen(str) + 1);
+    if (strbuf == NULL) {
+        perror("malloc: ");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(strbuf, str);
 
-    cptr = strchr(str, ':');
+    cptr = strchr(strbuf, ':');
     if (cptr != NULL)
         *cptr = '\0';
 
-    sptr = strchr(str, '/');
+    sptr = strchr(strbuf, '/');
     if (sptr != NULL)
         *sptr = '\0';
 
-    tsp->it_value.tv_sec = atoi(str);
+    tsp->it_value.tv_sec = atoi(strbuf);
     tsp->it_value.tv_nsec = (sptr != NULL) ? atoi(sptr + 1) : 0;
 
     if (cptr == NULL) {
@@ -29,4 +36,6 @@ void itimerspecFromStr(char *str, struct itimerspec *tsp)
         tsp->it_interval.tv_sec = atoi(cptr + 1);
         tsp->it_interval.tv_nsec = (sptr != NULL) ? atoi(sptr + 1) : 0;
     }
+
+    free(strbuf);
 }
